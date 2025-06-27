@@ -13,6 +13,7 @@ let botActive = false;
 let human = "X";
 let ai = "O";
 let current = "X";
+let botTimer;
 
 const wins = [
     [0,1,2],[3,4,5],[6,7,8],
@@ -21,13 +22,13 @@ const wins = [
 ];
 
 twoPlayerBtn.onclick = () => {
-    if (botActive && gameBoard.every(c => c === "")) {
-        botActive = false;
-        playerChoiceDiv.style.display = "none";
-        current = "X";
-        statusText.textContent = "Player X's turn";
-    }
+    botActive = false;
+    clearTimeout(botTimer);
+    playerChoiceDiv.style.display = "none";
+    reset(); 
+    statusText.textContent = "Player X's turn";
 };
+
 
 onePlayerBtn.onclick = () => {
     if (!botActive && gameBoard.every(c => c === "")) {
@@ -100,7 +101,7 @@ function checkTie() {
 }
 
 function botMove() {
-    setTimeout(() => {
+    botTimer = setTimeout(() => {
         let move = bestMove();
         play(move, ai);
         if (checkWin() || checkTie()) return;
@@ -108,6 +109,7 @@ function botMove() {
         statusText.textContent = "Your turn.";
     }, 1000);
 }
+
 
 function bestMove() {
     let bestScore = -Infinity;
@@ -165,6 +167,9 @@ function reset() {
     gameActive = true;
     current = "X";
     board.forEach(cell => cell.textContent = "");
-    statusText.textContent = botActive && human === "O" ? "Bot's turn." : "Player X's turn";
+    statusText.textContent = botActive
+        ? (human === "O" ? "Bot's turn." : "You are X. Your turn.")
+        : "Player X's turn";
     if (botActive && human === "O") botMove();
 }
+
