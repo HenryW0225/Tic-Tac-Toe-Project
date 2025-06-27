@@ -5,7 +5,7 @@ const twoPlayerBtn = document.getElementById('twoPlayerBtn');
 const onePlayerBtn = document.getElementById('onePlayerBtn');
 const playAsXBtn = document.getElementById('playAsXBtn');
 const playAsOBtn = document.getElementById('playAsOBtn');
-const playerChoiceDiv = document.getElementById('.player_choice');
+const playerChoiceDiv = document.getElementById('player_choice');
 
 let gameBoard = Array(9).fill("");
 let gameActive = true;
